@@ -2,6 +2,7 @@ package com.tsystems.validation;
 
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
+import javax.validation.Valid;
 import javax.validation.Validator;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -55,6 +56,14 @@ public class BookResource {
         } else {
             return new Result(violations);
         }
+    }
+
+    @Path("/end-point-method-validation")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Result tryMeEndPointMethodValidation(@Valid Book book) {
+        return new Result("Book is valid! It was validated by end point method validation.");
     }
 
 }
