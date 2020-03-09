@@ -13,6 +13,7 @@ dependencies {
     implementation 'io.quarkus:quarkus-rest-client'
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation 'io.quarkus:quarkus-resteasy'
+    implementation 'org.jboss.resteasy:resteasy-multipart-provider'
 
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
