@@ -1,10 +1,9 @@
 package com.tsystems.faulttolerance;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+
+import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -12,6 +11,7 @@ import javax.enterprise.context.ApplicationScoped;
 public class CoffeeRepositoryService {
 
     private Map<Integer, Coffee> coffeeList = new HashMap<>();
+    private AtomicLong counter = new AtomicLong(0);
 
     public CoffeeRepositoryService() {
         coffeeList.put(1, new Coffee(1, "Fernandez Espresso", "Colombia", 23));
@@ -36,4 +36,19 @@ public class CoffeeRepositoryService {
                 .limit(2)
                 .collect(Collectors.toList());
     }
+
+    @CircuitBreaker(requestVolumeThreshold = 4)
+    public Integer getAvailability(Coffee coffee) {
+        maybeFail();
+        return new Random().nextInt(30);
+    }
+
+    private void maybeFail() {
+        // introduce some artificial failures
+        final Long invocationNumber = counter.getAndIncrement();
+        if (invocationNumber % 4 > 1) { // alternate 2 successful and 2 failing invocations
+            throw new RuntimeException("Service failed.");
+        }
+    }
+
 }
