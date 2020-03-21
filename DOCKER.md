@@ -2,7 +2,12 @@
 
 #### Start MySql Container (downloads image if not found)
 ```
-docker run --detach --name quarkus-mysql -p 6604:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=quarkus_data -e MYSQL_USER=admin -e MYSQL_PASSWORD=admin -d mysql
+docker run --detach --name quarkus-mysql ^
+-p 6604:3306 ^
+-e MYSQL_ROOT_PASSWORD=root ^
+-e MYSQL_DATABASE=quarkus_data ^
+-e MYSQL_USER=admin -e MYSQL_PASSWORD=admin ^
+-d mysql
 ```
 ##### view all images
 ```
@@ -12,7 +17,7 @@ docker images
 ```
 docker ps -a
 ```
-##### Interact with Database (link to quarkus-mysql container) with mysql client
+##### Interact with Database (link to quarkus-mysql container) in PowerShell
 ```
 docker run -it --link quarkus-mysql:mysql --rm mysql sh -c 'exec mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD"'
 ```
