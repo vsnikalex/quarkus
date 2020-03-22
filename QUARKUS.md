@@ -50,4 +50,5 @@ mvn io.quarkus:quarkus-maven-plugin:1.3.0.Final:create -Dextensions="resteasy-js
 * Quarkus uses a default scoping of @ApplicationScoped
 * Panache Entity: And thanks to our field access rewrite, when your users read person.name they will actually call your getName() accessor, and similarly for field writes and the setter. This allows for proper encapsulation at runtime as all fields calls will be replaced by the corresponding getter/setter calls.
 * The stream methods require a transaction to work
+* If you don’t want to bother defining getters/setters for your entities, you can make them extend PanacheEntityBase and Quarkus will generate them for you. You can even extend PanacheEntity and take advantage of the default ID it provides.
 * 

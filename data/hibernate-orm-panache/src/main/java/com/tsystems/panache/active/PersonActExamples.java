@@ -1,5 +1,8 @@
-package com.tsystems.panache;
+package com.tsystems.panache.active;
 
+import com.tsystems.panache.Status;
+
+import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.NotFoundException;
 import java.time.LocalDate;
 import java.time.Month;
@@ -8,11 +11,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class PersonExamples {
+@ApplicationScoped
+public class PersonActExamples {
 
     public static void main(String[] args) {
         // creating a person
-        Person person = new Person();
+        PersonAct person = new PersonAct();
         person.name = "Stef";
         person.birth = LocalDate.of(1910, Month.FEBRUARY, 1);
         person.status = Status.ALIVE;
@@ -30,41 +34,42 @@ public class PersonExamples {
         }
 
         // getting a list of all Person entities
-        List<Person> allPersons = Person.listAll();
+        List<PersonAct> allPersons = PersonAct.listAll();
 
         // finding a specific person by ID
         Long personId = 1L;
-        person = Person.findById(personId);
+        person = PersonAct.findById(personId);
 
         // finding a specific person by ID via an Optional
-        Optional<Person> optional = Person.findByIdOptional(personId);
+        Optional<PersonAct> optional = PersonAct.findByIdOptional(personId);
         person = optional.orElseThrow(NotFoundException::new);
 
         // finding all living persons
-        List<Person> livingPersons = Person.list("status", Status.ALIVE);
+        List<PersonAct> livingPersons = PersonAct.list("status", Status.ALIVE);
 
         // counting all persons
-        long countAll = Person.count();
+        long countAll = PersonAct.count();
 
         // counting all living persons
-        long countAlive = Person.count("status", Status.ALIVE);
+        long countAlive = PersonAct.count("status", Status.ALIVE);
 
         // delete all living persons
-        Person.delete("status", Status.ALIVE);
+        PersonAct.delete("status", Status.ALIVE);
 
         // delete all persons
-        Person.deleteAll();
+        PersonAct.deleteAll();
 
         // update all living persons
-        Person.update("name = 'Moral' where status = ?1", Status.ALIVE);
+        PersonAct.update("name = 'Moral' where status = ?1", Status.ALIVE);
 
         // all list methods have equivalent stream versions
         // the stream methods require a transaction to work
-        try (Stream<Person> persons = Person.streamAll()) {
+        try (Stream<PersonAct> persons = PersonAct.streamAll()) {
             List<String> namesButEmmanuels = persons
                     .map(p -> p.name.toLowerCase() )
                     .filter( n -> ! "emmanuel".equals(n) )
                     .collect(Collectors.toList());
         }
+
     }
 }
