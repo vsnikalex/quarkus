@@ -1,12 +1,19 @@
 package com.tsystems.panache.active;
 
 import com.tsystems.panache.Status;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
+import io.quarkus.panache.common.Page;
+import io.quarkus.panache.common.Parameters;
+import io.quarkus.panache.common.Sort;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.NotFoundException;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -15,6 +22,7 @@ import java.util.stream.Stream;
 public class PersonActExamples {
 
     public static void main(String[] args) {
+        // BASIC EXAMPLES
         // creating a person
         PersonAct person = new PersonAct();
         person.name = "Stef";
@@ -71,5 +79,58 @@ public class PersonActExamples {
                     .collect(Collectors.toList());
         }
 
+        // ADVANCED QUERY
+        // PAGING
+        // create a query for all living persons
+        PanacheQuery<PersonAct> livingPersons2 = PersonAct.find("status", Status.ALIVE);
+
+        // make it use pages of 25 entries at a time
+        livingPersons2.page(Page.ofSize(25));
+
+        // get the first page
+        List<PersonAct> firstPage = livingPersons2.list();
+
+        // get the second page
+        List<PersonAct> secondPage = livingPersons2.nextPage().list();
+
+        // get page 7
+        List<PersonAct> page7 = livingPersons2.page(Page.of(7, 25)).list();
+
+        // get the number of pages
+        int numberOfPages = livingPersons2.pageCount();
+
+        // get the total number of entities returned by this query without paging
+        long count = livingPersons2.count();
+
+        // and you can chain methods of course
+        Stream<PanacheEntityBase> panacheEntityBaseStream = PersonAct.find("status", Status.ALIVE)
+                                                                        .page(Page.ofSize(25))
+                                                                        .nextPage()
+                                                                        .stream();
+
+        // SORTING
+        List<PersonAct> persons = PersonAct.list("order by name,birth");
+        persons = PersonAct.list(Sort.by("name").and("birth").toString());
+
+        // and with more restrictions
+        persons = PersonAct.list("status", Sort.by("name").and("birth"), Status.ALIVE);
+
+        // QUERY PARAMETERS
+        // You can pass query parameters by index (1-based) as shown below:
+        PersonAct.find("name = ?1 and status = ?2", "stef", Status.ALIVE);
+
+        // Or by name using a Map:
+        Map<String, Object> params = new HashMap<>();
+        params.put("name", "stef");
+        params.put("status", Status.ALIVE);
+        PersonAct.find("name = :name and status = :status", params);
+
+        // generate a Map
+        PersonAct.find("name = :name and status = :status",
+                Parameters.with("name", "stef").and("status", Status.ALIVE).map());
+
+        // use it as-is
+        PersonAct.find("name = :name and status = :status",
+                Parameters.with("name", "stef").and("status", Status.ALIVE));
     }
 }
