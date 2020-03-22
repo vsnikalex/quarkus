@@ -1,6 +1,10 @@
 package com.tsystems.hibernate.search.elasticsearch.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import org.hibernate.search.engine.backend.types.Sortable;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,11 +16,16 @@ import java.util.Objects;
 @Entity
 public class Author extends PanacheEntity {
 
+    @FullTextField(analyzer = "name")
+    @KeywordField(name = "firstName_sort", sortable = Sortable.YES, normalizer = "sort")
     public String firstName;
 
+    @FullTextField(analyzer = "name")
+    @KeywordField(name = "lastName_sort", sortable = Sortable.YES, normalizer = "sort")
     public String lastName;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @IndexedEmbedded
     public List<Book> books;
 
     @Override
