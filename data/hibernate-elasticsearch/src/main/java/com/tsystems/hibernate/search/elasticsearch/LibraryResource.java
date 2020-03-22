@@ -2,14 +2,20 @@ package com.tsystems.hibernate.search.elasticsearch;
 
 import com.tsystems.hibernate.search.elasticsearch.model.Author;
 import com.tsystems.hibernate.search.elasticsearch.model.Book;
+import io.quarkus.runtime.StartupEvent;
+import org.hibernate.search.mapper.orm.Search;
 import org.jboss.resteasy.annotations.jaxrs.FormParam;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
+import org.jboss.resteasy.annotations.jaxrs.QueryParam;
 
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
+import java.util.Optional;
 
 @Path("/library")
 @Produces(MediaType.APPLICATION_JSON)
@@ -82,5 +88,32 @@ public class LibraryResource {
         if (author != null) {
             author.delete();
         }
+    }
+
+    @Transactional
+    void onStart(@Observes StartupEvent ev) throws InterruptedException {
+        // only reindex if we imported some content
+        if (Book.count() > 0) {
+            Search.session(em)
+                    .massIndexer()
+                    .startAndWait();
+        }
+    }
+
+    @GET
+    @Path("author/search")
+    @Transactional
+    public List<Author> searchAuthors(@QueryParam String pattern,
+                                      @QueryParam Optional<Integer> size) {
+        return Search.session(em)
+                .search(Author.class)
+                .where(f ->
+                        pattern == null || pattern.trim().isEmpty() ?
+                                f.matchAll() :
+                                f.simpleQueryString()
+                                        .fields("firstName", "lastName", "books.title").matching(pattern)
+                )
+                .sort(f -> f.field("lastName_sort").then().field("firstName_sort"))
+                .fetchHits(size.orElse(20));
     }
 }

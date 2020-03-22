@@ -1,6 +1,13 @@
 # Docker data
-
-#### Start MySql Container (downloads image if not found)
+#### Start Elasticsearch Container (downloads image if not found)
+```
+docker run -it --rm=true --name elasticsearch_quarkus_test ^
+-p 9200:9200 -p 9300:9300 ^
+-e "discovery.type=single-node" ^
+docker.elastic.co/elasticsearch/elasticsearch:7.5.0
+```
+#### Start Database Container
+##### MySql
 ```
 docker run --detach --name quarkus-mysql ^
 -p 6604:3306 ^
@@ -8,6 +15,15 @@ docker run --detach --name quarkus-mysql ^
 -e MYSQL_DATABASE=quarkus_data ^
 -e MYSQL_USER=admin -e MYSQL_PASSWORD=admin ^
 -d mysql
+```
+##### PostgreSQL
+```
+docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 ^
+--name postgresql_quarkus_test ^
+-e POSTGRES_USER=quarkus_test ^
+-e POSTGRES_PASSWORD=quarkus_test ^
+-e POSTGRES_DB=quarkus_test ^
+-p 5432:5432 postgres:11.3
 ```
 ##### view all images
 ```
@@ -17,7 +33,7 @@ docker images
 ```
 docker ps -a
 ```
-##### Interact with Database (link to quarkus-mysql container) in PowerShell
+##### Interact with MySQL Database (link to quarkus-mysql container) in PowerShell
 ```
 docker run -it --link quarkus-mysql:mysql --rm mysql sh -c 'exec mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD"'
 ```

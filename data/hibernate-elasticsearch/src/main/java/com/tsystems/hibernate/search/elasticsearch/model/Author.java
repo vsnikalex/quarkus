@@ -3,6 +3,7 @@ package com.tsystems.hibernate.search.elasticsearch.model;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Indexed
 public class Author extends PanacheEntity {
 
     @FullTextField(analyzer = "name")
