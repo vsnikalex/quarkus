@@ -42,10 +42,12 @@ mvn io.quarkus:quarkus-maven-plugin:1.3.0.Final:create -Dextensions="resteasy-js
 
 #### Notes
 ##### Native
-* if you use Response and Quarkus can’t determine the beans that are serialized, you need to annotate them with @RegisterForReflection
-* while @Consumes and @Produces are optional as auto-negotiation is supported, it is heavily recommended to annotate your endpoints with them to define precisely the expected content-types
+* If you use Response and Quarkus can’t determine the beans that are serialized, you need to annotate them with @RegisterForReflection
+* While @Consumes and @Produces are optional as auto-negotiation is supported, it is heavily recommended to annotate your endpoints with them to define precisely the expected content-types
 * 
 ##### General
-* no-args constructor required for JSON serialization
+* No-args constructor required for JSON serialization
 * Quarkus uses a default scoping of @ApplicationScoped
+* Panache Entity: And thanks to our field access rewrite, when your users read person.name they will actually call your getName() accessor, and similarly for field writes and the setter. This allows for proper encapsulation at runtime as all fields calls will be replaced by the corresponding getter/setter calls.
+* The stream methods require a transaction to work
 * 
