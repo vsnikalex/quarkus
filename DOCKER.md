@@ -18,7 +18,7 @@ docker run --detach --name quarkus-mysql ^
 ```
 ##### PostgreSQL
 ```
-docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 ^
+docker run --detach --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 ^
 --name postgresql_quarkus_test ^
 -e POSTGRES_USER=quarkus_test ^
 -e POSTGRES_PASSWORD=quarkus_test ^
