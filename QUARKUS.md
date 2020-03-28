@@ -11,7 +11,7 @@ mvn io.quarkus:quarkus-maven-plugin:1.3.0.Final:create ^
 ```
 ##### Or run this one and configure your project in a terminal (even in PowerSell)
 ```
-mvn io.quarkus:quarkus-maven-plugin:1.3.0.Final:create -Dextensions="resteasy-jsonb" -DbuildTool="gradle"
+mvn io.quarkus:quarkus-maven-plugin:1.3.0.Final:create -DbuildTool="gradle"
 ```
 
 #### In IDEA
