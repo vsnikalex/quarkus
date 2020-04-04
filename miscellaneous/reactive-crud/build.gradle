@@ -14,7 +14,11 @@ dependencies {
     implementation 'io.quarkus:quarkus-resteasy-mutiny'
 
     implementation 'io.quarkus:quarkus-reactive-pg-client'
+
     implementation 'io.smallrye.reactive:smallrye-mutiny-vertx-web-client'
+
+    implementation 'io.smallrye.reactive:mutiny-rxjava'
+    implementation 'io.smallrye.reactive:mutiny-reactor'
 
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
