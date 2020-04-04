@@ -10,9 +10,13 @@ repositories {
 
 dependencies {
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
-    implementation 'io.quarkus:quarkus-resteasy'
+    implementation 'io.quarkus:quarkus-resteasy-jsonb'
+    implementation 'io.quarkus:quarkus-resteasy-mutiny'
 
     implementation 'io.quarkus:quarkus-vertx'
+    implementation 'io.quarkus:quarkus-vertx-web'
+
+    implementation 'io.quarkus:quarkus-reactive-pg-client'
 
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
