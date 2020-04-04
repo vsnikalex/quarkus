@@ -1,6 +1,8 @@
 package com.tsystems.quickstart;
 
+import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
+import org.jboss.resteasy.annotations.SseElementType;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
 import javax.inject.Inject;
@@ -17,14 +19,29 @@ public class ReactiveGreetingResource {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    public String hello() {
+        return "hello";
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
     @Path("/greeting/{name}")
     public Uni<String> greeting(@PathParam String name) {
         return service.greeting(name);
     }
 
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        return "hello";
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/greeting/{count}/{name}")
+    public Multi<String> greetings(@PathParam int count, @PathParam String name) {
+        return service.greetings(count, name);
+    }
+
+    @GET
+    @Produces(MediaType.SERVER_SENT_EVENTS)
+    @SseElementType(MediaType.TEXT_PLAIN)
+    @Path("/stream/{count}/{name}")
+    public Multi<String> greetingsAsStream(@PathParam int count, @PathParam String name) {
+        return service.greetings(count, name);
     }
 }

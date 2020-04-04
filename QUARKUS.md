@@ -37,8 +37,10 @@ mvn io.quarkus:quarkus-maven-plugin:1.3.0.Final:create -DbuildTool="gradle"
 	curl -v http://127.0.0.1:8080/secured/permit-all
 ###### GET with formatting	
 	curl -w "\n" http://localhost:8080/greeting
-###### JWT Test:	
-	curl -H "Authorization: Bearer YOUR_TOKEN" http://127.0.0.1:8080/secured/roles-allowed
+###### For JWT:	
+	curl -H "Au
+###### For SSE:	
+	curl -N http://localhost:8080/hello/stream/5/neo
 
 #### Notes
 ##### Native
