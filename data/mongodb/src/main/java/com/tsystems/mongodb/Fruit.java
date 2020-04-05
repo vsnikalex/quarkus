@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Fruit {
 
+    private String id;
     private String name;
     private String description;
 
@@ -17,6 +18,14 @@ public class Fruit {
 
     public String getName() {
         return name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setName(String name) {
