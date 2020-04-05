@@ -1,5 +1,6 @@
 package com.tsystems.mongodb.panache.active;
 
+import com.tsystems.mongodb.panache.Status;
 import io.quarkus.mongodb.panache.MongoEntity;
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import org.bson.codecs.pojo.annotations.BsonProperty;
@@ -10,7 +11,7 @@ import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
-@MongoEntity(collection="ThePerson")
+@MongoEntity(collection="TheActivePerson")
 public class Person extends PanacheMongoEntity {
     public String name;
 
