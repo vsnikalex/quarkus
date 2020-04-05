@@ -25,6 +25,10 @@ docker run --detach --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 ^
 -e POSTGRES_DB=quarkus_test ^
 -p 5432:5432 postgres:11.3
 ```
+##### MongoDB
+```
+docker run --detach -ti --rm -p 27017:27017 mongo:4.0
+```
 ##### view all images
 ```
 docker images
