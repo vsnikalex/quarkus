@@ -29,6 +29,10 @@ docker run --detach --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 ^
 ```
 docker run --detach -ti --rm -p 27017:27017 mongo:4.0
 ```
+##### Neo4j
+```
+docker run --detach --publish=7474:7474 --publish=7687:7687 -e 'NEO4J_AUTH=neo4j/secret' neo4j:4.0.0
+```
 ##### view all images
 ```
 docker images
