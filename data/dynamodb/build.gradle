@@ -12,7 +12,9 @@ dependencies {
     implementation 'io.quarkus:quarkus-amazon-dynamodb'
     implementation 'io.quarkus:quarkus-resteasy-jsonb'
     implementation 'io.quarkus:quarkus-resteasy-mutiny'
+
     implementation 'software.amazon.awssdk:url-connection-client'
+    implementation 'software.amazon.awssdk:netty-nio-client'
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation 'io.quarkus:quarkus-resteasy'
 
