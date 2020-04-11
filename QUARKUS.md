@@ -56,3 +56,5 @@ mvn io.quarkus:quarkus-maven-plugin:1.3.2.Final:create -Dextensions="resteasy-js
 * You should only use list and stream methods if your table contains small enough data sets. For larger data sets you can use the find method equivalents, which return a PanacheQuery on which you can do paging
 * Use @JsonbTransient to avoid infinite loops when serializing with JSON-B
 * Infispan: If your classes have only mutable fields, then the @ProtoFactory is not required, assuming your class has a no arg constructor.
+* Messaging: If you don’t want to create a deserializer for each of your pojo, you can use the generic io.vertx.kafka.client.serialization.JsonObjectDeserializer that will deserialize to a javax.json.JsonObject. The corresponding serializer can also be used: io.vertx.kafka.client.serialization.JsonObjectSerializer.
+* 
