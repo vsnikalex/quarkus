@@ -1,15 +1,4 @@
 #### Generate Gradle Project
-##### Use in Windows cmd or IDEA terminal (after that make sure that all dependencies are included in build.gradle)
-```
-mvn io.quarkus:quarkus-maven-plugin:1.3.2.Final:create ^
--DprojectGroupId="com.tsystems" ^
--DprojectArtifactId="microprofile-fault-tolerance" ^
--DclassName="com.tsystems.faulttolerance.CoffeeResource" ^
--Dpath="/coffee" ^
--Dextensions="smallrye-fault-tolerance, resteasy-jsonb" ^
--DbuildTool="gradle"
-```
-##### Or run this one and configure your project in a terminal (even in PowerSell)
 ```
 mvn io.quarkus:quarkus-maven-plugin:1.3.2.Final:create -Dextensions="resteasy-jsonb" -DbuildTool="gradle"
 ```
