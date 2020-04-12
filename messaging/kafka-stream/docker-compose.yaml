@@ -35,7 +35,7 @@ services:
   producer:
     image: quarkus-quickstarts/kafka-streams-producer:1.0
     build:
-      context: producer
+      context: producer/kafka-streams-producer
       dockerfile: src/main/docker/Dockerfile.${QUARKUS_MODE:-jvm}
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
@@ -45,7 +45,7 @@ services:
   aggregator:
     image: quarkus-quickstarts/kafka-streams-aggregator:1.0
     build:
-      context: aggregator
+      context: aggregator/kafka-streams-aggregator
       dockerfile: src/main/docker/Dockerfile.${QUARKUS_MODE:-jvm}
     environment:
       QUARKUS_KAFKA_STREAMS_BOOTSTRAP_SERVERS: kafka:9092
