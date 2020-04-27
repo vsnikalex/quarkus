@@ -14,6 +14,8 @@ mvn io.quarkus:quarkus-maven-plugin:1.4.1.Final:create -Dextensions="resteasy-js
 ##### Creating packages
 	mvnw package
 	gradlew build
+##### Native compilation (given Visual Studio 2017 Visual C++ Build Tools installed, from PowerShell)
+    cmd /c 'call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat" && mvn package -Pnative'
 
 #### Test
 ##### Unit tests
