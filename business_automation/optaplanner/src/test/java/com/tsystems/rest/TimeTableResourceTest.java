@@ -1,21 +1,66 @@
 package com.tsystems.rest;
 
+import com.tsystems.domain.Lesson;
+import com.tsystems.domain.Room;
+import com.tsystems.domain.TimeTable;
+import com.tsystems.domain.Timeslot;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
+import javax.inject.Inject;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 public class TimeTableResourceTest {
 
+    @Inject
+    TimeTableResource timeTableResource;
+
     @Test
-    public void testHelloEndpoint() {
-        given()
-                .when().get("/timeTable")
-                .then()
-                .statusCode(200)
-                .body(is("hello"));
+    @Timeout(600_000)
+    public void solve() {
+        TimeTable problem = generateProblem();
+        TimeTable solution = timeTableResource.solve(problem);
+        assertFalse(solution.getLessonList().isEmpty());
+        for (Lesson lesson : solution.getLessonList()) {
+            assertNotNull(lesson.getTimeslot());
+            assertNotNull(lesson.getRoom());
+        }
+        assertTrue(solution.getScore().isFeasible());
+    }
+
+    private TimeTable generateProblem() {
+        List<Timeslot> timeslotList = new ArrayList<>();
+        timeslotList.add(new Timeslot(DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 30)));
+        timeslotList.add(new Timeslot(DayOfWeek.MONDAY, LocalTime.of(9, 30), LocalTime.of(10, 30)));
+        timeslotList.add(new Timeslot(DayOfWeek.MONDAY, LocalTime.of(10, 30), LocalTime.of(11, 30)));
+        timeslotList.add(new Timeslot(DayOfWeek.MONDAY, LocalTime.of(13, 30), LocalTime.of(14, 30)));
+        timeslotList.add(new Timeslot(DayOfWeek.MONDAY, LocalTime.of(14, 30), LocalTime.of(15, 30)));
+
+        List<Room> roomList = new ArrayList<>();
+        roomList.add(new Room("Room A"));
+        roomList.add(new Room("Room B"));
+        roomList.add(new Room("Room C"));
+
+        List<Lesson> lessonList = new ArrayList<>();
+        lessonList.add(new Lesson(101L, "Math", "B. May", "9th grade"));
+        lessonList.add(new Lesson(102L, "Physics", "M. Curie", "9th grade"));
+        lessonList.add(new Lesson(103L, "Geography", "M. Polo", "9th grade"));
+        lessonList.add(new Lesson(104L, "English", "I. Jones", "9th grade"));
+        lessonList.add(new Lesson(105L, "Spanish", "P. Cruz", "9th grade"));
+
+        lessonList.add(new Lesson(201L, "Math", "B. May", "10th grade"));
+        lessonList.add(new Lesson(202L, "Chemistry", "M. Curie", "10th grade"));
+        lessonList.add(new Lesson(203L, "History", "I. Jones", "10th grade"));
+        lessonList.add(new Lesson(204L, "English", "P. Cruz", "10th grade"));
+        lessonList.add(new Lesson(205L, "French", "M. Curie", "10th grade"));
+        return new TimeTable(timeslotList, roomList, lessonList);
     }
 
 }
