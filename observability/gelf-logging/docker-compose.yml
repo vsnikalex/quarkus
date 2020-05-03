@@ -14,7 +14,7 @@ services:
   fluentd:
     build: fluentd
     ports:
-      - "12201:12201/udp"
+      - "5140:5140/udp"
     volumes:
       - source: $HOME/fluentd
         target: /fluentd/etc
