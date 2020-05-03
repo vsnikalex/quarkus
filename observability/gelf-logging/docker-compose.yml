@@ -1,3 +1,4 @@
+# Launch Elasticsearch
 version: '3.2'
 
 services:
@@ -5,30 +6,36 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.2
     ports:
       - "9200:9200"
+      - "9300:9300"
     environment:
       ES_JAVA_OPTS: "-Xms512m -Xmx512m"
     networks:
-      - graylog
+      - elk
 
-  mongo:
-    image: mongo:4.0
-    networks:
-      - graylog
-
-  graylog:
-    image: graylog/graylog:3.1
+  logstash:
+    image: docker.elastic.co/logstash/logstash-oss:6.8.2
+    volumes:
+      - source: $HOME/pipelines
+        target: /usr/share/logstash/pipeline
+        type: bind
     ports:
-      - "9000:9000"
       - "12201:12201/udp"
-      - "1514:1514"
-    environment:
-      GRAYLOG_HTTP_EXTERNAL_URI: "http://127.0.0.1:9000/"
+      - "5000:5000"
+      - "9600:9600"
     networks:
-      - graylog
+      - elk
     depends_on:
       - elasticsearch
-      - mongo
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana-oss:6.8.2
+    ports:
+      - "5601:5601"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
 
 networks:
-  graylog:
+  elk:
     driver: bridge
