@@ -12,10 +12,10 @@ public class GreetingControllerTest {
     @Test
     public void testHelloEndpoint() {
         given()
-                .when().get("/greeting")
+                .when().get("/greeting/quarkus")
                 .then()
                 .statusCode(200)
-                .body(is("hello"));
+                .body("message", is("hello quarkus"));
     }
 
 }
