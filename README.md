@@ -36,7 +36,9 @@ mvn io.quarkus:quarkus-maven-plugin:1.4.1.Final:create -Dextensions="resteasy-js
 #### Notes
 ##### Native
 * If you use Response and Quarkus can’t determine the beans that are serialized, you need to annotate them with @RegisterForReflection
+* For the third-party JARs registering for reflection, the usage of reflection-config.json is required
 * While @Consumes and @Produces are optional as auto-negotiation is supported, it is heavily recommended to annotate your endpoints with them to define precisely the expected content-types
+* Quarkus automatically includes the resources present in META-INF/resources (the web resources) but, outside of this directory, you are on your own. To include more resources in the native executable, create a resources-config.json JSON file defining which resources should be included
 * 
 ##### General
 * No-args constructor required for JSON serialization
