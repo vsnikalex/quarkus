@@ -15,6 +15,6 @@ public class GreetingResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
-        return properties.text;
+        return properties.text + properties.suffix;
     }
 }

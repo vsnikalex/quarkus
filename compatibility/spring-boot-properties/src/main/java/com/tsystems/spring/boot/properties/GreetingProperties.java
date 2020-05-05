@@ -6,4 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class GreetingProperties {
 
     public String text;
+
+    public String suffix = "!";
 }
