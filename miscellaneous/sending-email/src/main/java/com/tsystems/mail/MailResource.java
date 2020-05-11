@@ -1,6 +1,7 @@
 package com.tsystems.mail;
 
 import io.quarkus.mailer.Mail;
+import io.quarkus.mailer.MailTemplate;
 import io.quarkus.mailer.reactive.ReactiveMailer;
 
 import javax.inject.Inject;
@@ -15,6 +16,9 @@ public class MailResource {
 
     @Inject
     ReactiveMailer reactiveMailer;
+
+    @Inject
+    MailTemplate hello;
 
     @GET
     @Path("/async")
@@ -46,5 +50,16 @@ public class MailResource {
                         new File("quarkus-logo.png"),
                         "image/png", "<my-image@quarkus.io>"));
         return Response.accepted().build();
+    }
+
+    @GET
+    @Path("/template")
+    public CompletionStage<Response> send() {
+        return hello.to("repnikum@gmail.com")
+                .subject("Hello from Qute template")
+                // the template looks like: Hello {name}!
+                .data("name", "John")
+                .send()
+                .thenApply(x -> Response.accepted().build());
     }
 }
