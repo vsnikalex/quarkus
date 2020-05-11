@@ -23,4 +23,16 @@ public class MailResource {
                 .subscribeAsCompletionStage()
                 .thenApply(x -> Response.accepted().build());
     }
+
+    @GET
+    @Path("/attachment")
+    public Response sendEmailWithAttachment() {
+        reactiveMailer.send(Mail.withText("repnikum@gmail.com", "An email from quarkus with attachment",
+                "This is my body")
+                .addAttachment("my-file.txt",
+                        "content of my file".getBytes(), "text/plain"));
+        return Response.accepted().build();
+    }
+
+
 }
