@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
+import java.io.File;
 import java.util.concurrent.CompletionStage;
 
 @Path("/mail")
@@ -34,5 +35,16 @@ public class MailResource {
         return Response.accepted().build();
     }
 
-
+    @GET
+    @Path("/html")
+    public Response sendingHTML() {
+        String body = "<strong>Hello!</strong>" + "\n" +
+                "<p>Here is an image for you: <img src=\"cid:my-image@quarkus.io\"/></p>" +
+                "<p>Regards</p>";
+        reactiveMailer.send(Mail.withHtml("repnikum@gmail.com", "An email in HTML", body)
+                .addInlineAttachment("quarkus-logo.png",
+                        new File("quarkus-logo.png"),
+                        "image/png", "<my-image@quarkus.io>"));
+        return Response.accepted().build();
+    }
 }
