@@ -1,12 +1,12 @@
-package com.tsystems.rest;
+package com.tsystems.kubernetes;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("/greeting")
-public class GreetingResource {
+@Path("/hello")
+public class HelloResource {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)

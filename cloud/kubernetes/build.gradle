@@ -11,9 +11,6 @@ repositories {
 dependencies {
     implementation 'io.quarkus:quarkus-container-image-docker'
     implementation 'io.quarkus:quarkus-kubernetes'
-    implementation 'io.quarkus:quarkus-kubernetes-client'
-    implementation 'io.quarkus:quarkus-smallrye-health'
-
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation 'io.quarkus:quarkus-resteasy'
 
@@ -36,4 +33,8 @@ compileTestJava {
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
+}
+
+test {
+    systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
 }
