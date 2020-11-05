@@ -1,6 +1,6 @@
 #### Generate Gradle Project
 ```
-mvn io.quarkus:quarkus-maven-plugin:1.5.1.Final:create -Dextensions="resteasy-jsonb" -DbuildTool="gradle"
+mvn io.quarkus:quarkus-maven-plugin:1.8.2.Final:create -Dextensions="resteasy-jsonb" -DbuildTool="gradle"
 ```
 
 #### In IDEA
@@ -39,7 +39,7 @@ mvn io.quarkus:quarkus-maven-plugin:1.5.1.Final:create -Dextensions="resteasy-js
 * For the third-party JARs registering for reflection, the usage of reflection-config.json is required
 * While @Consumes and @Produces are optional as auto-negotiation is supported, it is heavily recommended to annotate your endpoints with them to define precisely the expected content-types
 * Quarkus automatically includes the resources present in META-INF/resources (the web resources) but, outside of this directory, you are on your own. To include more resources in the native executable, create a resources-config.json JSON file defining which resources should be included
-* 
+
 ##### General
 * No-args constructor required for JSON serialization
 * Quarkus uses a default scoping of @ApplicationScoped
@@ -50,4 +50,3 @@ mvn io.quarkus:quarkus-maven-plugin:1.5.1.Final:create -Dextensions="resteasy-js
 * Use @JsonbTransient to avoid infinite loops when serializing with JSON-B
 * Infispan: If your classes have only mutable fields, then the @ProtoFactory is not required, assuming your class has a no arg constructor.
 * Messaging: If you don’t want to create a deserializer for each of your pojo, you can use the generic io.vertx.kafka.client.serialization.JsonObjectDeserializer that will deserialize to a javax.json.JsonObject. The corresponding serializer can also be used: io.vertx.kafka.client.serialization.JsonObjectSerializer.
-* 
