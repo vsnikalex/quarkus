@@ -11,13 +11,32 @@ import javax.ws.rs.core.MediaType;
 public class GettingStartedResource {
 
     @GET
+    @Path("/world")
     @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
+    public String helloWorld() {
         Multi.createFrom().items("hello", "world")
                 .onItem().transform(s -> s.toUpperCase() + " ")
                 .onCompletion().continueWith("!")
                 .subscribe().with(System.out::print);
 
-        return "hello";
+        return "helloWold()";
+    }
+
+    @GET
+    @Path("/concept")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String helloConcept() {
+        Multi<String> source = Multi.createFrom().items("a", "b", "c");
+
+        source
+                .onItem().invoke(item -> System.out.println("Received item " + item))
+                .onFailure().invoke(failure -> System.out.println("Failed with " + failure.getMessage()))
+                .onCompletion().invoke(() -> System.out.println("Completed"))
+                .onSubscribe().invoke(subscription -> System.out.println("We are subscribed!"))
+                .onCancellation().invoke(() -> System.out.println("Downstream has cancelled the interaction"))
+                .onRequest().invoke(n -> System.out.println("Downstream requested " + n + " items"))
+                .subscribe().with(item -> System.out.println("Subscriber received " + item));
+
+        return "helloConcept()";
     }
 }
