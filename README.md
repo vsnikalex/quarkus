@@ -1,6 +1,6 @@
 #### Generate Gradle Project
 ```
-mvn io.quarkus:quarkus-maven-plugin:1.8.2.Final:create -Dextensions="resteasy-jsonb" -DbuildTool="gradle"
+mvn io.quarkus:quarkus-maven-plugin:1.9.2.Final:create -Dextensions="resteasy-jackson" -DbuildTool="gradle"
 ```
 
 #### In IDEA
