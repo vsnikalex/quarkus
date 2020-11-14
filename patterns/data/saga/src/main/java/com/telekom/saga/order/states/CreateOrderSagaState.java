@@ -4,7 +4,7 @@ public abstract class CreateOrderSagaState {
 
     CreateOrderSaga saga;
 
-    public CreateOrderSagaState(CreateOrderSaga saga) {
+    CreateOrderSagaState(CreateOrderSaga saga) {
         this.saga = saga;
     }
 
