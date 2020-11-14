@@ -9,10 +9,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.quarkus:quarkus-vertx'
-    implementation 'io.quarkus:quarkus-resteasy-mutiny'
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
-    implementation 'io.quarkus:quarkus-resteasy'
+
+    implementation 'io.quarkus:quarkus-resteasy-jackson'
+    implementation 'io.quarkus:quarkus-resteasy-mutiny'
 
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
