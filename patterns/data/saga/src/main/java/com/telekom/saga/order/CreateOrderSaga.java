@@ -13,10 +13,6 @@ public class CreateOrderSaga {
         this.state.onAction();
     }
 
-    public void changeState(CreateOrderSagaState state) {
-        this.state = state;
-    }
-
     // TODO: connect to create order saga reply channel
     private void onMessage(boolean success) {
         if (!(state instanceof Compensatable)) {
@@ -28,5 +24,13 @@ public class CreateOrderSaga {
         } else {
             ((Compensatable) state).onFail();
         }
+    }
+
+    public CreateOrderSagaState getState() {
+        return state;
+    }
+
+    public void setState(CreateOrderSagaState state) {
+        this.state = state;
     }
 }
