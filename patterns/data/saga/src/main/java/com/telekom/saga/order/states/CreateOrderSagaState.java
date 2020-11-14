@@ -1,5 +1,7 @@
 package com.telekom.saga.order.states;
 
+import com.telekom.saga.order.CreateOrderSaga;
+
 public abstract class CreateOrderSagaState {
 
     CreateOrderSaga saga;
