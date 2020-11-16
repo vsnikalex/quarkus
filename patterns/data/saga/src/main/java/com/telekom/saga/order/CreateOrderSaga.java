@@ -15,14 +15,14 @@ public class CreateOrderSaga {
 
     // TODO: connect to create order saga reply channel
     private void onMessage(boolean success) {
-        if (!(state instanceof Compensatable)) {
-            return;
-        }
+        if (state instanceof Compensatable) {
+            Compensatable compensatableState = (Compensatable) state;
 
-        if (success) {
-            ((Compensatable) state).onSuccess();
-        } else {
-            ((Compensatable) state).onFail();
+            if (success) {
+                compensatableState.onSuccess();
+            } else {
+                compensatableState.onFail();
+            }
         }
     }
 
