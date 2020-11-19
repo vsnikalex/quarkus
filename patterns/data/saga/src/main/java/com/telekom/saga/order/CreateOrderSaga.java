@@ -1,15 +1,15 @@
 package com.telekom.saga.order;
 
 import com.telekom.saga.order.states.Compensatable;
-import com.telekom.saga.order.states.ConsumerVerifying;
 import com.telekom.saga.order.states.CreateOrderSagaState;
+import com.telekom.saga.order.states.CustomerVerifying;
 
 public class CreateOrderSaga {
 
     private CreateOrderSagaState state;
 
     public CreateOrderSaga() {
-        this.state = new ConsumerVerifying(this);
+        this.state = new CustomerVerifying(this);
         this.state.onAction();
     }
 

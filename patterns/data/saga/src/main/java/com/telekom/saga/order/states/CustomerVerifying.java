@@ -3,11 +3,11 @@ package com.telekom.saga.order.states;
 import com.telekom.saga.order.CreateOrderSaga;
 import org.jboss.logging.Logger;
 
-public class ConsumerVerifying extends CreateOrderSagaState implements Compensatable {
+public class CustomerVerifying extends CreateOrderSagaState implements Compensatable {
 
-    private static final Logger LOGGER = Logger.getLogger(ConsumerVerifying.class);
+    private static final Logger LOGGER = Logger.getLogger(CustomerVerifying.class);
 
-    public ConsumerVerifying(CreateOrderSaga saga) {
+    public CustomerVerifying(CreateOrderSaga saga) {
         super(saga);
     }
 
