@@ -14,14 +14,15 @@ public class CustomerVerifying extends CreateOrderSagaState implements Compensat
     @Override
     public void onAction() {
         LOGGER.info("Verifying Consumer");
-        LOGGER.info("Consumer Verified");
-        saga.setState(new TicketCreating(saga));
-        saga.getState().onAction();
+        // TODO: implement messaging to customer service
+
     }
 
     @Override
     public void onSuccess() {
-
+        LOGGER.info("Consumer Verified");
+        saga.setState(new TicketCreating(saga));
+        saga.getState().onAction();
     }
 
     @Override

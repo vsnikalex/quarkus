@@ -12,10 +12,10 @@ public class CreateOrderSaga {
 
     @Setter
     private CreateOrderSagaState state;
-    private final OrderDTO orderDTO;
+    private final OrderDTO order;
 
-    public CreateOrderSaga(OrderDTO orderDTO) {
-        this.orderDTO = orderDTO;
+    public CreateOrderSaga(OrderDTO order) {
+        this.order = order;
 
         this.state = new CustomerVerifying(this);
         this.state.onAction();
