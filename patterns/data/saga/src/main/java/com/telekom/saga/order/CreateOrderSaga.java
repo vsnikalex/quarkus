@@ -4,9 +4,13 @@ import com.telekom.saga.order.dto.OrderDTO;
 import com.telekom.saga.order.states.Compensatable;
 import com.telekom.saga.order.states.CreateOrderSagaState;
 import com.telekom.saga.order.states.CustomerVerifying;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
 public class CreateOrderSaga {
 
+    @Setter
     private CreateOrderSagaState state;
     private final OrderDTO orderDTO;
 
@@ -28,17 +32,5 @@ public class CreateOrderSaga {
                 compensatableState.onFail();
             }
         }
-    }
-
-    public CreateOrderSagaState getState() {
-        return state;
-    }
-
-    public void setState(CreateOrderSagaState state) {
-        this.state = state;
-    }
-
-    public OrderDTO getOrderDTO() {
-        return orderDTO;
     }
 }
