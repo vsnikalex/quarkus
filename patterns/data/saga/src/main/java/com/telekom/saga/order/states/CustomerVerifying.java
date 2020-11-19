@@ -1,6 +1,7 @@
 package com.telekom.saga.order.states;
 
 import com.telekom.saga.order.CreateOrderSaga;
+import com.telekom.saga.order.dto.CustomerDTO;
 import org.jboss.logging.Logger;
 
 public class CustomerVerifying extends CreateOrderSagaState implements Compensatable {
@@ -15,7 +16,7 @@ public class CustomerVerifying extends CreateOrderSagaState implements Compensat
     public void onAction() {
         LOGGER.info("Verifying Consumer");
         // TODO: implement messaging to customer service
-
+        CustomerDTO customer = saga.getOrder().getCustomer();
     }
 
     @Override
