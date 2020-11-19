@@ -1,5 +1,8 @@
 package com.telekom.saga.order.dto;
 
+import lombok.Getter;
+
+@Getter
 public class OrderDTO {
 
     private String date;
