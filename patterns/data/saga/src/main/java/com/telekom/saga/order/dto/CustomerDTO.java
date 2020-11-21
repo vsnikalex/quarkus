@@ -10,7 +10,9 @@ import javax.enterprise.inject.Model;
 @Model
 public class CustomerDTO {
 
-    private String name;
-    private String surname;
-    private String phoneNumber;
+    String name;
+    String surname;
+    String phoneNumber;
+
+    String orderId;
 }

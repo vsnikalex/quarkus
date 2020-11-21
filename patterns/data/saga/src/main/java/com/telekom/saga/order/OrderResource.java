@@ -25,6 +25,8 @@ public class OrderResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public Response createOrder(OrderDTO orderDTO) {
+        orderDTO.generateId();
+
         createOrderSagas.add(createOrderSagaConfig.createOrderSaga(orderDTO));
 
         return Response.accepted("Order Accepted").build();

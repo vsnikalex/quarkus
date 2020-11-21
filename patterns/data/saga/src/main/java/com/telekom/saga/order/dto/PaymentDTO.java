@@ -10,6 +10,8 @@ import javax.enterprise.inject.Model;
 @Model
 public class PaymentDTO {
 
-    private String cardNumber;
-    private Integer cost;
+    String cardNumber;
+    Integer cost;
+
+    String orderId;
 }

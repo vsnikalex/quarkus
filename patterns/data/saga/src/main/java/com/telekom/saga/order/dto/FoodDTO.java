@@ -11,5 +11,7 @@ import java.util.List;
 @Model
 public class FoodDTO {
 
-    private List<String> positions;
+    List<String> positions;
+
+    String orderId;
 }
