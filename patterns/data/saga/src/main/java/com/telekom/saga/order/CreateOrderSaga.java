@@ -5,20 +5,16 @@ import com.telekom.saga.order.states.Compensatable;
 import com.telekom.saga.order.states.CreateOrderSagaState;
 import com.telekom.saga.order.states.CustomerVerifying;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class CreateOrderSaga {
 
-    @Setter
     private CreateOrderSagaState state;
     private final OrderDTO order;
 
     public CreateOrderSaga(OrderDTO order) {
         this.order = order;
-
-        this.state = new CustomerVerifying(this);
-        this.state.onAction();
+        setState(new CustomerVerifying(this));
     }
 
     // TODO: connect to create order saga reply channel
@@ -32,5 +28,10 @@ public class CreateOrderSaga {
                 compensatableState.onFail();
             }
         }
+    }
+
+    public void setState(CreateOrderSagaState state) {
+        this.state = state;
+        this.state.onAction();
     }
 }

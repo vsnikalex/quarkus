@@ -1,0 +1,15 @@
+{
+   "date" : "{date ?: '2020-12-19'}",
+   "food" : {
+      "positions" : [ "Pasta", "Ice cream", "Coffee" ]
+   },
+   "customer" : {
+      "name" : "{name ?: 'Vasilii'}",
+      "surname" : "{surname ?: 'Nikolaev'}",
+      "phoneNumber" : "{phoneNumber ?: '89211234567'}"
+   },
+   "payment" : {
+      "cardNumber" : "{cardNumber ?: '4111 1234 5678 9101'}",
+      "cost" : "{cost ?: '$15'}"
+   }
+}

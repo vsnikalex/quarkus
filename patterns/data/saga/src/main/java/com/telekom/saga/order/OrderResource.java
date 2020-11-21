@@ -3,7 +3,8 @@ package com.telekom.saga.order;
 import com.telekom.saga.order.dto.OrderDTO;
 
 import javax.annotation.PostConstruct;
-import javax.ws.rs.GET;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -21,7 +22,8 @@ public class OrderResource {
         createOrderSagas = new ArrayList<>();
     }
 
-    @GET
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public Response createOrder(OrderDTO orderDTO) {
         createOrderSagas.add(new CreateOrderSaga(orderDTO));
