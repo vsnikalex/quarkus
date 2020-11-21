@@ -10,6 +10,6 @@
    },
    "payment" : {
       "cardNumber" : "{cardNumber ?: '4111 1234 5678 9101'}",
-      "cost" : "{cost ?: '$15'}"
+      "cost" : "{cost ?: '15'}"
    }
 }
