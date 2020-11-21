@@ -3,6 +3,7 @@ package com.telekom.saga.order;
 import com.telekom.saga.order.dto.OrderDTO;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -13,6 +14,9 @@ import java.util.List;
 public class OrderResource {
 
     List<CreateOrderSaga> createOrderSagas;
+
+    @Inject
+    QueueClientConfig queueClientConfig;
 
     @PostConstruct
     void init() {
@@ -30,7 +34,7 @@ public class OrderResource {
 
     @GET
     public Response sendMessage() {
-        QueueClient queueClient = new QueueClient();
+        QueueClient queueClient = queueClientConfig.queueClient();
         queueClient.sendMessage();
 
         return Response.accepted("Message Sent").build();
