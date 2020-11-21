@@ -1,20 +1,28 @@
 package com.telekom.saga.order;
 
+import com.telekom.saga.order.cdi.CustomerStatesConfig;
 import com.telekom.saga.order.dto.OrderDTO;
 import com.telekom.saga.order.states.Compensatable;
 import com.telekom.saga.order.states.CreateOrderSagaState;
-import com.telekom.saga.order.states.CustomerVerifying;
 import lombok.Getter;
+
+import javax.inject.Inject;
 
 @Getter
 public class CreateOrderSaga {
 
-    private CreateOrderSagaState state;
-    private final OrderDTO order;
+    CreateOrderSagaState state;
+    OrderDTO order;
 
-    public CreateOrderSaga(OrderDTO order) {
+    CustomerStatesConfig customerStatesConfig;
+
+    public CreateOrderSaga() {
+    }
+
+    @Inject
+    public CreateOrderSaga(OrderDTO order, CustomerStatesConfig customerStatesConfig) {
         this.order = order;
-        setState(new CustomerVerifying(this));
+        setState(customerStatesConfig.customerVerifying(this));
     }
 
     // TODO: connect to create order saga reply channel

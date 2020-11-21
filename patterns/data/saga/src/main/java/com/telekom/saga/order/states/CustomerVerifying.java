@@ -2,7 +2,6 @@ package com.telekom.saga.order.states;
 
 import com.telekom.saga.order.CreateOrderSaga;
 import com.telekom.saga.order.dto.CustomerDTO;
-import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.jboss.logging.Logger;
 
@@ -12,12 +11,12 @@ public class CustomerVerifying extends CreateOrderSagaState implements Compensat
 
     private static final Logger LOGGER = Logger.getLogger(CustomerVerifying.class);
 
-    @Inject
-    @Channel("customer-create")
     Emitter<CustomerDTO> customerEmitter;
 
-    public CustomerVerifying(CreateOrderSaga saga) {
+    @Inject
+    public CustomerVerifying(CreateOrderSaga saga, Emitter<CustomerDTO> customerEmitter) {
         super(saga);
+        this.customerEmitter = customerEmitter;
     }
 
     @Override
