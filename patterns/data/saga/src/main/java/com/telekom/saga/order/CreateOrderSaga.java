@@ -16,9 +16,6 @@ public class CreateOrderSaga {
 
     CustomerStatesConfig customerStatesConfig;
 
-    public CreateOrderSaga() {
-    }
-
     @Inject
     public CreateOrderSaga(OrderDTO order, CustomerStatesConfig customerStatesConfig) {
         this.order = order;
