@@ -16,7 +16,7 @@ import java.util.List;
 @Path("/createOrder")
 public class OrderResource {
 
-    List<CreateOrderSaga> createOrderSagas = new ArrayList<>();
+    static List<CreateOrderSaga> createOrderSagas = new ArrayList<>();
 
     @Inject
     CreateOrderSagaConfig createOrderSagaConfig;

@@ -1,10 +1,14 @@
 package com.telekom.service;
 
 import com.telekom.saga.order.dto.CustomerDTO;
+import com.telekom.saga.order.dto.StageUpdate;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +19,10 @@ public class CustomerService {
 
     Map<String, CustomerDTO> customers = new HashMap<>();
 
+    @Inject
+    @Channel("order-reply")
+    Emitter<StageUpdate> stageUpdateEmitter;
+
     @Incoming("customers")
     public void verify(CustomerDTO customerDTO) {
         customers.put(customerDTO.getOrderId(), customerDTO);
@@ -22,6 +30,7 @@ public class CustomerService {
         LOGGER.infof("Order %s: Begin Verification of Customer %s %s",
                 customerDTO.getOrderId(), customerDTO.getName(), customerDTO.getSurname());
 
-        // TODO: emit event CustomerVerified into saga reply channel
+        stageUpdateEmitter.send(new StageUpdate(StageUpdate.Stage.CUSTOMER_VERIFICATION,
+                                                customerDTO.getPhoneNumber().contains("812")));
     }
 }

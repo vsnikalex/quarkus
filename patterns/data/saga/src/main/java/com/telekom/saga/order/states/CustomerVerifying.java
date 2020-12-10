@@ -36,12 +36,15 @@ public class CustomerVerifying extends CreateOrderSagaState implements Compensat
 
     @Override
     public void onSuccess() {
-        LOGGER.info("Consumer Verified");
-        saga.setState(new TicketCreating(saga));
+        LOGGER.info("Customer Verified");
+
+        // TODO: set state to TicketCreating
     }
 
     @Override
     public void onFail() {
+        LOGGER.info("Customer Data is not Valid");
 
+        // TODO: set state to OrderRejecting
     }
 }

@@ -2,6 +2,7 @@ package com.telekom.saga.order;
 
 import com.telekom.saga.order.cdi.CustomerStatesConfig;
 import com.telekom.saga.order.dto.OrderDTO;
+import com.telekom.saga.order.dto.StageUpdate;
 import com.telekom.saga.order.states.Compensatable;
 import com.telekom.saga.order.states.CreateOrderSagaState;
 import lombok.Getter;
@@ -19,15 +20,17 @@ public class CreateOrderSaga {
     @Inject
     public CreateOrderSaga(OrderDTO order, CustomerStatesConfig customerStatesConfig) {
         this.order = order;
+
         setState(customerStatesConfig.customerVerifying(this));
     }
 
-    // TODO: connect to create order saga reply channel
-    private void onMessage(boolean success) {
+    void onMessage(StageUpdate stageUpdate) {
+        // TODO: update order state on events
+
         if (state instanceof Compensatable) {
             Compensatable compensatableState = (Compensatable) state;
 
-            if (success) {
+            if (stageUpdate.isSuccess()) {
                 compensatableState.onSuccess();
             } else {
                 compensatableState.onFail();
