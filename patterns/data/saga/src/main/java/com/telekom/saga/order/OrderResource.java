@@ -2,6 +2,8 @@ package com.telekom.saga.order;
 
 import com.telekom.saga.order.cdi.CreateOrderSagaConfig;
 import com.telekom.saga.order.dto.OrderDTO;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -21,6 +23,10 @@ public class OrderResource {
     @Inject
     CreateOrderSagaConfig createOrderSagaConfig;
 
+    @Inject
+    @Channel("new-orders-stream")
+    Emitter<OrderDTO> newOrderEmitter;
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
@@ -28,6 +34,8 @@ public class OrderResource {
         orderDTO.generateId();
 
         createOrderSagas.add(createOrderSagaConfig.createOrderSaga(orderDTO));
+
+        newOrderEmitter.send(orderDTO);
 
         return Response.accepted("Order Accepted").build();
     }
