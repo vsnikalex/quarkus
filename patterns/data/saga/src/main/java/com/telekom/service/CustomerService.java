@@ -26,7 +26,7 @@ public class CustomerService {
     Emitter<StateUpdate> stageUpdateEmitter;
 
     @Incoming("customers")
-    public void verify(CustomerDTO customerDTO) {
+    public void verify(CustomerDTO customerDTO) throws InterruptedException {
         // Persist customer in "database"
         customers.put(customerDTO.getOrderId(), customerDTO);
 
@@ -35,6 +35,9 @@ public class CustomerService {
 
         // Validate customer
         boolean success = customerDTO.getPhoneNumber().contains("812");
+
+        // Emulate delay
+        Thread.sleep(2000);
 
         // Emit event
         stageUpdateEmitter.send(new StateUpdate(orderId, CUSTOMER_VERIFICATION, success));
