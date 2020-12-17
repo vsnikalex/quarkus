@@ -16,6 +16,5 @@ public class TicketApproving extends CreateOrderSagaState {
         LOGGER.info("Approving Ticket");
         LOGGER.info("Ticket Approved");
         saga.setState(new OrderApproved(saga));
-        saga.getState().onAction();
     }
 }

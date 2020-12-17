@@ -16,7 +16,6 @@ public class CardAuthorizing extends CreateOrderSagaState implements Compensatab
         LOGGER.info("Authorizing Card");
         LOGGER.info("Card authorized");
         saga.setState(new TicketApproving(saga));
-        saga.getState().onAction();
     }
 
     @Override

@@ -16,7 +16,6 @@ public class TicketCreating extends CreateOrderSagaState implements Compensatabl
         LOGGER.info("Creating Ticket");
         LOGGER.info("Ticket Created");
         saga.setState(new CardAuthorizing(saga));
-        saga.getState().onAction();
     }
 
     @Override
