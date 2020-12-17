@@ -9,14 +9,15 @@ import lombok.NoArgsConstructor;
 @RegisterForReflection
 @NoArgsConstructor
 @AllArgsConstructor
-public class StageUpdate {
+public class StateUpdate {
 
-    public enum Stage {
+    public enum State {
         CUSTOMER_VERIFICATION,
         TICKET_CREATION,
         PAYMENT_APPROVAL
     }
 
-    Stage stage;
+    String orderId;
+    State state;
     boolean success;
 }

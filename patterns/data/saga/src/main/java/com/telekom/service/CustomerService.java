@@ -1,7 +1,7 @@
 package com.telekom.service;
 
 import com.telekom.saga.order.dto.CustomerDTO;
-import com.telekom.saga.order.dto.StageUpdate;
+import com.telekom.saga.order.dto.StateUpdate;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
@@ -12,6 +12,8 @@ import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.telekom.saga.order.dto.StateUpdate.State.CUSTOMER_VERIFICATION;
+
 @ApplicationScoped
 public class CustomerService {
 
@@ -21,16 +23,20 @@ public class CustomerService {
 
     @Inject
     @Channel("order-reply")
-    Emitter<StageUpdate> stageUpdateEmitter;
+    Emitter<StateUpdate> stageUpdateEmitter;
 
     @Incoming("customers")
     public void verify(CustomerDTO customerDTO) {
+        // Persist customer in "database"
         customers.put(customerDTO.getOrderId(), customerDTO);
 
-        LOGGER.infof("Order %s: Begin Verification of Customer %s %s",
-                customerDTO.getOrderId(), customerDTO.getName(), customerDTO.getSurname());
+        final String orderId = customerDTO.getOrderId();
+        LOGGER.infof("Order %s: Begin Verification of Customer %s %s", orderId, customerDTO.getName(), customerDTO.getSurname());
 
-        stageUpdateEmitter.send(new StageUpdate(StageUpdate.Stage.CUSTOMER_VERIFICATION,
-                                                customerDTO.getPhoneNumber().contains("812")));
+        // Validate customer
+        boolean success = customerDTO.getPhoneNumber().contains("812");
+
+        // Emit event
+        stageUpdateEmitter.send(new StateUpdate(orderId, CUSTOMER_VERIFICATION, success));
     }
 }

@@ -2,7 +2,7 @@ package com.telekom.saga.order;
 
 import com.telekom.saga.order.cdi.CustomerStatesConfig;
 import com.telekom.saga.order.dto.OrderDTO;
-import com.telekom.saga.order.dto.StageUpdate;
+import com.telekom.saga.order.dto.StateUpdate;
 import com.telekom.saga.order.states.Compensatable;
 import com.telekom.saga.order.states.CreateOrderSagaState;
 import lombok.Getter;
@@ -24,13 +24,11 @@ public class CreateOrderSaga {
         setState(customerStatesConfig.customerVerifying(this));
     }
 
-    void onMessage(StageUpdate stageUpdate) {
-        // TODO: update order state on events
-
+    void onMessage(StateUpdate stateUpdate) {
         if (state instanceof Compensatable) {
             Compensatable compensatableState = (Compensatable) state;
 
-            if (stageUpdate.isSuccess()) {
+            if (stateUpdate.isSuccess()) {
                 compensatableState.onSuccess();
             } else {
                 compensatableState.onFail();
